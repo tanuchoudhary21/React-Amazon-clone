@@ -25,6 +25,7 @@ function Product({ id, title, price, description, category, image}) {
             description,
             category,
             image,
+            hasPrime,
         };
 
         //SENDING THE PRODUCT AS AN ACTION TO THE REDUX STORE... THE BASKET SLICE
