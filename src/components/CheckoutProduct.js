@@ -28,7 +28,9 @@ function CheckoutProduct({
             image,
             hasPrime,
         }
+        
         dispatch(addToBasket(product));
+        
     }
 
     const removeItemFromBasket = () => {
@@ -77,7 +79,29 @@ function CheckoutProduct({
             </div>
             {/* Right Side with Add and Remove Buttons */}
             <div className = "flex flex-col space-y-2 my-auto justify-self-end" >
-                <button onClick = {addItemToBasket} className = "button" >Add to Basket</button>
+                {/* <button onClick = {addItemToBasket} className = "button" >Add to Basket</button> */}
+                <div className = "flex justify-between" >
+                <img 
+                    alt = "increase" 
+                    // className = "" 
+                    src = "https://image.flaticon.com/icons/png/512/1828/1828926.png"
+                    height = {30}
+                    width = {30}
+                    onClick = {addItemToBasket}
+                    // onClick = {() => onIncreaseQuantity(product)}    
+                />
+
+                <p>Qty : </p>
+
+                <img 
+                    src="https://image.flaticon.com/icons/png/512/992/992683.png" 
+                    alt="decrease" 
+                    height = {30}
+                    width = {30}
+                    // onClick = {() => onDecreaseQuantity(product)}
+                    />
+
+                </div>
                 <button onClick = {removeItemFromBasket} className = "button" >Remove from Basket</button>
             </div>
 

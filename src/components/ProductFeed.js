@@ -1,6 +1,8 @@
 import Product from "./Product";
 
 function ProductFeed( { products } ) {
+    console.log("PRODUCTS:" , products);
+    
     return (
         <div className = "grid grid-flow-row-dense md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 bg-gray-100 md:-mt-52 mx-auto">
 
