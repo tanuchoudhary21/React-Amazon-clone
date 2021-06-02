@@ -4,6 +4,8 @@ import Header from "../components/Header";
 import { selectItems , selectTotal } from "../slices/basketSlice";
 import CheckoutProduct from '../components/CheckoutProduct';
 import Currency from "react-currency-formatter";
+import { groupBy } from "lodash";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { useSession } from "next-auth/client";
 import { loadStripe } from "@stripe/stripe-js";
 import axios from "axios";
@@ -35,6 +37,8 @@ function checkout() {
         }
     };
 
+    const groupedItems = Object.values(groupBy(items, "id"));
+
     return (
         <div className = "bg-gray-100">
             <Header/>
@@ -53,7 +57,28 @@ function checkout() {
                         { items.length === 0 ? 'Your Amazon Basket is Empty' : 'Your Amazon Order' }
                     </h1>
 
-                    {items.map((item,i) => (
+                    <TransitionGroup>
+                            {groupedItems.map((group, i) => (
+                                <CSSTransition
+                                    key={group[0].image}
+                                    timeout={500}
+                                    classNames="item">
+                                    <CheckoutProduct
+                                        id={group[0].id}
+                                        title={group[0].title}
+                                        rating={group[0].rating}
+                                        price={group[0].price}
+                                        description={group[0].description}
+                                        category={group[0].category}
+                                        image={group[0].image}
+                                        hasPrime={group[0].hasPrime}
+                                        quantity={group.length}
+                                    />
+                                </CSSTransition>
+                            ))}
+                        </TransitionGroup>
+
+                    {/* {items.map((item,i) => (
                         <CheckoutProduct 
                             key = {i} //NOT THE BEST WAY TO DO USE INDEX AS UNIQUE KEY
                             id = {item.id}
@@ -65,7 +90,7 @@ function checkout() {
                             hasPrime = {item.hasPrime}
                             rating = {item.rating}
                         />
-                    ))}
+                    ))} */}
                 </div>
             </div>
             

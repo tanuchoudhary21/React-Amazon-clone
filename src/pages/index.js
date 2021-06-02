@@ -3,10 +3,20 @@ import Header from "../components/Header";
 import Banner from "../components/Banner";
 import ProductFeed from "../components/ProductFeed";
 import { getSession } from "next-auth/client";
+import { useState } from "react";
 
 
 
 export default function Home( { products } ) {
+  const [filteredProducts, setProducts] = useState(products);
+
+    function filterProducts(searchText) {
+        const matchedProducts = products.filter((product) =>
+            product.title.toLowerCase().includes(searchText.toLowerCase())
+        );
+        setProducts([...matchedProducts]);
+    }
+
   return (
     <div>
       <Head>
@@ -14,7 +24,7 @@ export default function Home( { products } ) {
       </Head>
       
       {/* Header */}
-      <Header />
+      <Header onSearchValue={filterProducts} />
 
       <main className = " max-w-screen-2xl mx-auto ">
         {/* Banner */}
@@ -22,7 +32,13 @@ export default function Home( { products } ) {
 
 
         {/* Product Feed */}
-        <ProductFeed products = { products } />
+        {filteredProducts.length > 0 ? (
+                    <ProductFeed products={filteredProducts} />
+                ) : (
+                    <h1 className="text-center text-2xl py-4">
+                        🙁 No matching products…
+                    </h1>
+        )}
         
       </main>
     </div>
@@ -42,6 +58,8 @@ const session = await getSession(context);
       session
     } ,
   };
+
+  return {props: { products } };
 }
 
 //Get --->>>>   https://fakestoreapi.com/products

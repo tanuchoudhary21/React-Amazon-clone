@@ -14,6 +14,7 @@
     "axios": "^0.21.1",
     "firebase": "^8.6.2",
     "firebase-admin": "^9.8.0",
+    "lodash": "^4.17.21",
     "micro": "^9.3.4",
     "moment": "^2.29.1",
     "next": "latest",
@@ -23,6 +24,7 @@
     "react-dom": "17.0.1",
     "react-redux": "7.2.2",
     "react-responsive-carousel": "^3.2.18",
+    "react-transition-group": "^4.4.1",
     "stripe": "^8.149.0"
   },
   "license": "MIT",
@@ -30,5 +32,16 @@
     "autoprefixer": "^10.2.5",
     "postcss": "^8.2.15",
     "tailwindcss": "^2.1.2"
-  }
+  },
+  "description": "",
+  "main": "firebase.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tanuchoudhary21/React-Amazon-clone.git"
+  },
+  "author": "TANU",
+  "bugs": {
+    "url": "https://github.com/tanuchoudhary21/React-Amazon-clone/issues"
+  },
+  "homepage": "https://github.com/tanuchoudhary21/React-Amazon-clone#readme"
 }

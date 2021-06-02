@@ -2,20 +2,23 @@ import Image from "next/image";
 import { StarIcon } from "@heroicons/react/solid";
 import Currency from "react-currency-formatter";
 import { useDispatch } from "react-redux";
-import { addToBasket, removeFromBasket } from '../slices/basketSlice';
+import { addToBasket, removeFromBasket, removeGroupedFromBasket } from '../slices/basketSlice';
 
-function CheckoutProduct({
-    id,
-    title,
-    price,
-    rating,
-    description,
-    category,
-    image,
-    hasPrime,
-}) {
+function CheckoutProduct(props) {
     //Push Item to REDUX
     const dispatch = useDispatch()
+
+    const id = props.id;
+    const title = props.title;
+    const rating = props.rating;
+    const price = props.price;
+    const description = props.description;
+    const category = props.category;
+    const image = props.image;
+    const hasPrime = props.hasPrime;
+    const quantity = props.quantity;
+
+    const total = price * quantity;
 
     const addItemToBasket = () => {
         const product = {
@@ -28,7 +31,7 @@ function CheckoutProduct({
             image,
             hasPrime,
         }
-        
+        // Sending the product via an action to the redux store (= basket "slice")
         dispatch(addToBasket(product));
         
     }
@@ -37,6 +40,11 @@ function CheckoutProduct({
         // Remove the item from REDUX
         dispatch(removeFromBasket({ id }));
     };
+
+    function removeGroupFromBasket() {
+        dispatch(removeGroupedFromBasket({ id }));
+    };
+
 
     return (
         <div className = "grid grid-cols-5" >
@@ -63,7 +71,7 @@ function CheckoutProduct({
                 {/* Description of product */}
                 <p className = "text-xs my-2 line-clamp-3" >{description}</p>
 
-                <Currency quantity ={price} currency = "GBP" />
+                {quantity} ×<Currency quantity ={price} currency = "GBP" />
 
                 {hasPrime && (
                     <div className = "flex items-center space-x-2" >
@@ -91,18 +99,18 @@ function CheckoutProduct({
                     // onClick = {() => onIncreaseQuantity(product)}    
                 />
 
-                <p>Qty : </p>
+                <p>Quantity: <span className = "font-bold" >{quantity}</span> </p>
 
                 <img 
                     src="https://image.flaticon.com/icons/png/512/992/992683.png" 
                     alt="decrease" 
                     height = {30}
                     width = {30}
-                    // onClick = {() => onDecreaseQuantity(product)}
+                    onClick = {removeItemFromBasket}
                     />
 
                 </div>
-                <button onClick = {removeItemFromBasket} className = "button" >Remove from Basket</button>
+                <button onClick = {removeGroupFromBasket} className = "button" >Remove from Basket</button>
             </div>
 
         </div>
